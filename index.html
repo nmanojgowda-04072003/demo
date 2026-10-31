@@ -1391,7 +1391,7 @@ function render() {
   const a = document.activeElement, keep = a && a.id ? { id: a.id, s: a.selectionStart } : null;
   const root = document.getElementById('root');
   if (!state.signedIn) { root.innerHTML = protoBar() + signIn(); syncTheme(); restore(keep); return; }
-  const allowed = [...navRoutes(state.role), ...TOOL_ROUTES];
+  const allowed = [...navRoutes(state.role), ...TOOL_ROUTES, ...(state.role==='University Admin'?['rpdetail','rpcreate']:state.role==='Principal'?['rpdetail']:[])];
   let p;
   if (!allowed.includes(state.route)) { audit('Denied: open page', state.route); p = { title: 'You don\'t have access to this', body: notice('', 'This page isn\'t available for your role', 'Your current role or scope doesn\'t allow it. Contact your institution administrator if you need access.', `<a class="btn btn--secondary btn--compact" href="#/overview">Go to overview</a>`) }; }
   else p = (PAGES[state.route] || PAGES.overview)();
